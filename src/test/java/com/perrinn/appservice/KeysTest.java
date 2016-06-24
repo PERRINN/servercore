@@ -8,7 +8,7 @@ public class KeysTest {
 
 	@Test
 	public void testKeys() {
-		Keys k = new Keys(System.currentTimeMillis());
+		Keys k = new Keys();
 		String s1 = k.getKeyData();
 		String s2 = k.getKeyData();
 		

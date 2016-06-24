@@ -20,7 +20,7 @@ public class KeysController {
 	
 	@RequestMapping(value="/User/NewKey", method=RequestMethod.GET)
 	public @ResponseBody String ShowKey() {
-		Keys k = new Keys(System.currentTimeMillis());
+		Keys k = new Keys();
 		return String.format(template, "KeyVal", k.getKeyData(), "Ttl", "600");
 	}
 
