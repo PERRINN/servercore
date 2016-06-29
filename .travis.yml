@@ -12,6 +12,7 @@ notications:
 
 deploy:
   provider: s3
+  file: "target/*.jar"
   access_key_id: ${AWS_KEY}
   secret_access_key: ${AWS_SECRET}
   bucket: "perrapp-dist"
