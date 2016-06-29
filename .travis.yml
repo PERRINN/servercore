@@ -17,3 +17,5 @@ deploy:
   bucket: "S3 Bucket"
   skip_cleanup: true
   region: ap-southeast-2
+  on:
+    all_branches: true
