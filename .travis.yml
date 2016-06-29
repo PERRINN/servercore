@@ -2,12 +2,18 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk7
+  
+branches:
+  except:
+    experimental
+  
 notications:
   slackL perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
 
 deploy:
   provider: s3
-  access_key_id: "AKIAJVSBKZQ26JKNAWFQ"
-  secret_access_key: "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"
+  access_key_id: ${AWS_KEY}
+  secret_access_key: ${AWS_SECRET}
   bucket: "S3 Bucket"
   skip_cleanup: true
+  region: ap-southeast-2
