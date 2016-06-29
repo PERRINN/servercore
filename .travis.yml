@@ -5,4 +5,9 @@ jdk:
 notications:
   slackL perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
 
-  
+deploy:
+  provider: s3
+  access_key_id: "AKIAJVSBKZQ26JKNAWFQ"
+  secret_access_key: "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"
+  bucket: "S3 Bucket"
+  skip_cleanup: true
