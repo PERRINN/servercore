@@ -5,7 +5,8 @@ jdk:
   
 branches:
   except:
-    experimental
+    - experimental
+    - main
   
 notications:
   slackL perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
