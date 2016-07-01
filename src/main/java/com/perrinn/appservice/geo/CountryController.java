@@ -45,4 +45,13 @@ public class CountryController {
 		c.setCountryName(sName);
 		return String.format(template, "CountryId", String.valueOf(c.getId()), "CountryCode", c.getCountryCode());
 	}
+
+	@RequestMapping(value="/Country/CheckDivision", method=RequestMethod.GET)
+	public @ResponseBody String getCheckDivision(@RequestParam("CC") String sCode) {
+		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
+
+		Country c = new Country();
+		c.setCountryCode(sCode);
+		return String.format(template, "Division", String.valueOf(c.getHasDivision()), "DivisionName", c.getDivisionName());
+	}
 }
