@@ -19,7 +19,7 @@ public class CountryController {
 
 	@RequestMapping(value="/Country/GetByCode", method=RequestMethod.GET)
 	public @ResponseBody String getCountryByCode(@RequestParam("CC") String sCode) {
-		static final String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
+		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Country c = new Country();
 		c.setCountryCode(sCode);
@@ -28,7 +28,7 @@ public class CountryController {
 
 	@RequestMapping(value="/Country/GetById", method=RequestMethod.GET)
 	public @ResponseBody String getCountryById(@RequestParam("CI") int id) {
-		static final String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
+		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Country c = new Country();
 		c.setId(id);
@@ -37,7 +37,7 @@ public class CountryController {
 
 	@RequestMapping(value="/Country/GetByName", method=RequestMethod.GET)
 	public @ResponseBody String getCountry(@RequestParam("CN") String sName) {
-		static final String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
+		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Country c = new Country();
 		c.setCountryName(sName);
