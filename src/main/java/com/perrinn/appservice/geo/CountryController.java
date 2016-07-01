@@ -5,6 +5,8 @@
 /* For usage rights, please contact contact@perrinn.com      */
 /*                                                           */
 /*************************************************************/
+/* This module developed by Christopher Moran                */
+/*************************************************************/
 
 package com.perrinn.appservice.geo;
 
