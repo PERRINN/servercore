@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.perrinn.appservice.geo.Country" table="country">
+		<id name="id" type="int" column="id">
+			<generator class="increment" />
+		</id>
+		<property name="country_code">
+			<column name="country_code" />
+		</property>
+		<property name="country_name">
+			<column name="country_name" />
+		</property>
+		<property name="has_division">
+			<column name="has_division" />
+		</property>
+		<property name="division_name">
+			<column name="division_name" />
+		</property>
+	</class>
+</hibernate-mapping>
+
