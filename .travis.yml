@@ -2,7 +2,22 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk7
+  
+branches:
+  except:
+    - experimental
+    - main
+  
 notications:
   slackL perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
 
-  
+deploy:
+  provider: s3
+  file: "target/*.jar"
+  access_key_id: ${AWS_KEY}
+  secret_access_key: ${AWS_SECRET}
+  bucket: "perrapp-dist"
+  skip_cleanup: true
+  region: ap-southeast-2
+  on:
+    all_branches: true
