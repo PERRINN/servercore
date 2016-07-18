@@ -7,6 +7,12 @@
     <artifactId>perrin-app-service</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
+    <url>www.perrinn.com</url>
+    <name>Perrinn Application Service</name>
+    <ciManagement>
+        <system>Travis-ci</system>
+        <url>http://travis-ci.org</url>
+    </ciManagement>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -44,6 +50,26 @@
             <artifactId>junit-dep</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -1,8 +1,14 @@
 language: java
 jdk:
+<<<<<<< HEAD
   - oraclejdk8
   - oraclejdk7
 notications:
   slackL perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
 
   
+=======
+ - oraclejdk8
+notifications:
+ slack: perrinn:QiSIQnmPR2DQJGwbUjjp7m7D
+>>>>>>> d499a79e72d552389fc79974f9d633c0898ffacf
