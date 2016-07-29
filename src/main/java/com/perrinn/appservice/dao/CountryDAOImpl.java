@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 import com.perrinn.appservice.geo.Country;
 
 public class CountryDAOImpl {
-
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

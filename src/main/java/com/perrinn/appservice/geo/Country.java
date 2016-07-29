@@ -16,62 +16,75 @@ public class Country {
 	private long id;
 	private String countryCode;
 	private String countryName;
-	private boolean hasRegion;
-	private String regionName;
+	private boolean hasDivision;
+	private String divisionName;
 
-	public Country(String code) {
+	private void initLocals() {
 		this.id = 0;
-		if(code.length() == 0)
-			this.countryCode = null;
-		else
-			this.countryCode = code;
+		this.countryCode = null;
 		this.countryName = null;
-		this.hasRegion = false;
-		this.regionName = null;
+		this.hasDivision = false;
+		this.divisionName = null;
 	}
 
+	// Getters
 	public long getId() {
 		return this.id;
-	}
-
-	public void setId(long value) {
-		this.id = value;
 	}
 
 	public String getCountryCode() {
 		return this.countryCode;
 	}
 
-	public void setCountryCode(String value) {
-		this.countryCode = value;
-	}
-
 	public String getCountryName() {
 		return this.countryName;
+	}
+
+	public boolean getHasDivision() {
+		return this.hasDivision;
+	}
+
+	public String getDivisionName() {
+		return this.divisionName;
+	}
+
+	public void setHasDivision(boolean value) {
+		this.hasDivision = value;
+	}
+
+	// Setters
+	public void setId(long value) {
+		this.id = value;
+	}
+
+	public void setCountryCode(String value) {
+		this.countryCode = value;
 	}
 
 	public void setCountryName(String value) {
 		this.countryName = value;
 	}
 
-	public boolean getHasRegion() {
-		return this.hasRegion;
-	}
-
-	public void setHasRegion(boolean value) {
-		this.hasRegion = value;
-	}
-
-	public String getRegionName() {
-		return this.regionName;
-	}
-
-	public void setRegionName(String value) {
-		this.regionName = value;
-	}
-
 	@Override
 	public String toString() {
-		return "id=" + String.valueOf(this.id) + ", countryCode=" + this.countryCode + ", countryName=" + this.countryName + ", hasRegion=" + String.valueOf(this.hasRegion) + ", regionName" + this.regionName;
+		return "id=" + String.valueOf(this.id) + ", countryCode=" + this.countryCode + ", countryName=" + this.countryName + ", hasDivision=" + String.valueOf(this.hasDivision) + ", divisionName" + this.divisionName;
+	}
+
+	public void setDivisionName(String value) {
+		this.divisionName = value;
+	}
+
+	public Country() {
+		this.initLocals();
+	}
+
+	public Country(String code) {
+		this.initLocals();
+		this.countryCode = code;
+	}
+
+	public Country(long id) {
+		this.initLocals();
+		this.id = id;
 	}
 }
