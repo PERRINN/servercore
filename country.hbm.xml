@@ -5,20 +5,20 @@
 
 <hibernate-mapping>
 	<class name="com.perrinn.appservice.geo.Country" table="country">
-		<id name="id" type="int" column="id">
+		<id name="id" type="java.lang.Integer" column="id">
 			<generator class="increment" />
 		</id>
-		<property name="country_code">
-			<column name="country_code" />
+		<property name="country_code" type="String" >
+			<column name="country_code" length="5" not-null="true" />
 		</property>
-		<property name="country_name">
-			<column name="country_name" />
+		<property name="country_name" type="String" >
+			<column name="country_name" length="255" not-null="true"  />
 		</property>
-		<property name="has_division">
-			<column name="has_division" />
+		<property name="has_division" type="Boolean" >
+			<column name="has_division" not-null="false" />
 		</property>
-		<property name="division_name">
-			<column name="division_name" />
+		<property name="division_name" type="String" >
+			<column name="division_name" not-null="false" />
 		</property>
 	</class>
 </hibernate-mapping>

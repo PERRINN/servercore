@@ -33,6 +33,7 @@
 		<mapping resource="country.hbm.xml" />
 		<mapping resource="region.hbm.xml" />
 		<mapping resource="city.hbm.xml" />
+		<mapping resource="member.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
 
