@@ -27,6 +27,42 @@ public class Member {
 	private String dbUser;
 	private String dbPass;
 
+	public long getId() {
+		return this.id;
+	}
+
+	public String getUserName() {
+		return this.user_name;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public Calendar getDateOfBirth() {
+		return this.dateOfBirth;
+	}
+
+	public Calendar getPwChangeDate() {
+		return this.pwChangeDate;
+	}
+
+	public void setId(long value) {
+		this.id = value;
+	}
+
+	public void setPassword(String value) {
+		this.password = value;
+	}
+
+	public void setDateOfBirth(Calendar value) {
+		this.dateOfBirth = value;
+	}
+
+	public void setPwChangeDate(Calendar value) {
+		this.pwChangeDate = value;
+	}
+
 	private void InitLocals() {
 		this.id = 0;
 		this.user_name = null;
@@ -53,8 +89,30 @@ public class Member {
 
 	private boolean FindByName() {
 		boolean fRet = false;
+		Statement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
 
 		//SELECT * FROM MEMBER WHERE USER_NAME=$this.user_name;
+		try {
+			stmt = this.conn.createStatement();
+			sql = "SELECT * FROM MEMBER WHERE USER_NAME=\'" + this.user_name + "\'";
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				this.user_name = rs.getString("user_name");
+				this.password = rs.getString("password");
+/*
+				this.dateOfBirth = rs.get
+				this.pwChangeDate = rs.get
+*/
+			}
+			rs.close();
+			stmt.close();
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			fRet = true;
+		}
 		return fRet;
 	}
 
@@ -66,14 +124,27 @@ public class Member {
 	public Member(String memberName) {
 		this.InitLocals();
 		this.user_name = memberName;
+		this.FindByName();
 	}
 
-	public long getId() {
-		return this.id;
-	}
+	public boolean save() {
+		boolean fRet = false;
 
-	public void setId(long value) {
-		this.id = value;
+		Statement stmt = null;
+		String sql = null;
+
+		try {
+			stmt = this.conn.createStatement();
+			sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
+			stmt.executeUpdate(sql);
+			stmt.close();
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			fRet = true;
+		}
+
+		return fRet;
 	}
 
 	public void close() {
