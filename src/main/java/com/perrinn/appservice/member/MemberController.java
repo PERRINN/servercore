@@ -25,6 +25,6 @@ public class MemberController {
 
 		Member m = new Member();
 
-		return String.format(template, "Member", String.valueOf(m.getMemberId()), "AuthState", "NONE");
+		return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
 	}
 }
