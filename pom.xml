@@ -10,8 +10,8 @@
     <url>www.perrinn.com</url>
     <name>Perrinn Application Service</name>
     <ciManagement>
-        <system>Travis-ci</system>
-        <url>http://travis-ci.org</url>
+        <system>Jenkins</system>
+        <url>http://jenkins.io</url>
     </ciManagement>
 
     <parent>
