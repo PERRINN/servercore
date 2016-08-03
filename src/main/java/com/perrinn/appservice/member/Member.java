@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Calendar;
+import java.util.Date;
 import java.sql.*;
 import com.perrinn.appservice.util.Config;
 
@@ -19,8 +19,9 @@ public class Member {
 	private long id;
 	private String user_name;
 	private String password; 
-	private Calendar dateOfBirth;
-	private Calendar pwChangeDate;
+	private Date create_date;
+	private Date dateOfBirth;
+	private Date pwChangeDate;
 
 	private Connection conn;
 	private String dbUrl;
@@ -39,12 +40,16 @@ public class Member {
 		return this.password;
 	}
 
-	public Calendar getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public Calendar getPwChangeDate() {
+	public Date getPwChangeDate() {
 		return this.pwChangeDate;
+	}
+
+	public Date getCreateDate() {
+		return this.create_date;
 	}
 
 	public void setId(long value) {
@@ -55,20 +60,25 @@ public class Member {
 		this.password = value;
 	}
 
-	public void setDateOfBirth(Calendar value) {
+	public void setDateOfBirth(Date value) {
 		this.dateOfBirth = value;
 	}
 
-	public void setPwChangeDate(Calendar value) {
+	public void setPwChangeDate(Date value) {
 		this.pwChangeDate = value;
+	}
+
+	public void setCreateDate(Date value) {
+		this.create_date = value;
 	}
 
 	private void InitLocals() {
 		this.id = 0;
 		this.user_name = null;
 		this.password = null;
-		this.dateOfBirth = Calendar.getInstance();
-		this.pwChangeDate = Calendar.getInstance();
+		this.dateOfBirth = new Date();
+		this.pwChangeDate = new Date();
+		this.create_date = new Date();
 
 		Config conf = new Config();
 		if(conf.getDatabaseName() != null) {
@@ -101,10 +111,9 @@ public class Member {
 			while(rs.next()) {
 				this.user_name = rs.getString("user_name");
 				this.password = rs.getString("password");
-/*
-				this.dateOfBirth = rs.get
-				this.pwChangeDate = rs.get
-*/
+
+				this.dateOfBirth = rs.getDate("create_date");
+				this.pwChangeDate = rs.getDate("pw_change");
 			}
 			rs.close();
 			stmt.close();
@@ -156,5 +165,37 @@ public class Member {
 				System.err.println(ex.toString());
 			}
 		}
+	}
+
+	public boolean logIn(String userName, String password) {
+		boolean fRet = false;
+		Statement stmt = null;
+		String sql = null;
+
+		try {
+			stmt = this.conn.createStatement();
+			// We don't actually need to know the result, just make sure we can get one.
+			sql = "SELECT * FROM member WHERE (user_name=\'" + userName + "\' AND password=\'" + password + "\'";
+			if(stmt.execute(sql) == true)
+				fRet = false;
+			else
+				fRet = true;
+
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			fRet = true;
+		}
+		finally {
+			try {
+				if(stmt != null)
+					stmt.close();
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+			}
+		}
+
+		return fRet;
 	}
 }

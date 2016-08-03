@@ -24,7 +24,11 @@ public class MemberController {
 		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Member m = new Member();
-
-		return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
+		if(m.logIn(sMid, sHash) == false) {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "OK");
+		}
+		else {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
+		}
 	}
 }
