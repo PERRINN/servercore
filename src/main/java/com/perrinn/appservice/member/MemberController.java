@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 
 	@RequestMapping(value="/Member/LogMeIn", method=RequestMethod.GET)
-	public @ResponseBody String getCheckDivision(@RequestParam("MI") String sMid) {
+	public @ResponseBody String logMeIn(@RequestParam("MI") String sMid, @RequestParam("MH") String sHash) {
 		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Member m = new Member();
