@@ -199,4 +199,44 @@ public class Member {
 
 		return fRet;
 	}
+
+	public boolean signUp(String userName, String password) {
+		boolean fRet = false;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = null;
+
+		try {
+			stmt = this.conn.createStatement();
+			//BUGBUG: Add the create_date value at this point, because it won't change
+			sql = "INSERT INTO member (user_name, password) VALUES(\'" + userName + "\',\'" + password + "\')";
+			if(stmt.execute(sql) == true) {	
+				sql = "SELECT id FROM member WHERE user_name = \'" + userName + "\' AND password = \'" + password + "\'"; 
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					this.id = rs.getInt("id");
+					this.user_name = userName;
+				}
+
+				fRet = false;
+			}
+		}
+		catch(Exception ex) {
+				System.err.println(ex.toString());
+				fRet = true;
+		}
+		finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(stmt != null)
+					stmt.close();
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+			}
+		}
+
+		return fRet;
+	}
 }
