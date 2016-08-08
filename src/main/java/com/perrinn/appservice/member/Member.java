@@ -1,3 +1,13 @@
+/*************************************************************/
+/* Copyright (C) 2016, PERRINN Limited.  All Rights Reserved */
+/*                                                           */
+/* This software is distributed under the Apache 2.0 license */
+/* For usage rights, please contact contact@perrinn.com      */
+/*                                                           */
+/*************************************************************/
+/* This module developed by Christopher Moran                */
+/*************************************************************/
+
 package com.perrinn.appservice.member;
 
 import javax.persistence.Column;
@@ -11,7 +21,7 @@ import java.sql.*;
 import com.perrinn.appservice.util.Config;
 
 @Entity
-@Table(name="country")
+@Table(name="member")
 public class Member {
 	@Id
 	@Column(name="id")
@@ -20,8 +30,19 @@ public class Member {
 	private String user_name;
 	private String password; 
 	private Date create_date;
-	private Date dateOfBirth;
 	private Date pwChangeDate;
+
+	/*
+	 * Profile data
+	*/
+	private long profileId;
+	private long profileUser;
+	private long profileCountry;
+	private long profileRegion;
+	private long profileCity;
+	private Date dateOfBirth;
+	private String profileDescription;
+	private String profilePhoto;
 
 	private Connection conn;
 	private String dbUrl;
@@ -52,6 +73,30 @@ public class Member {
 		return this.create_date;
 	}
 
+	public long getProfileId() {
+		return this.profileId;
+	}
+
+	public long getProfileCountry() {
+		return this.profileCountry;
+	}
+
+	public long getProfileRegion() {
+		return this.profileRegion;
+	}
+
+	public long getProfileCity() {
+		return this.profileCity;
+	}
+
+	public String getProfileDescription() {
+		return this.profileDescription;
+	}
+
+	public String getProfilePhoto() {
+		return this.profilePhoto;
+	}
+
 	public void setId(long value) {
 		this.id = value;
 	}
@@ -72,6 +117,30 @@ public class Member {
 		this.create_date = value;
 	}
 
+	public void setProfileId(long value) {
+		this.profileId = value;
+	}
+
+	public void setProfileCountry(long value) {
+		this.profileCountry = value;
+	}
+
+	public void setProfileRegion(long value) {
+		this.profileRegion = value;
+	}
+
+	public void setProfileCity(long value) {
+		this.profileCity = value;
+	}
+
+	public void setProfileDescription(String value) {
+		this.profileDescription = value;
+	}
+
+	public void setProfilePhoto(String value) {
+		this.profilePhoto = value;
+	}
+
 	private void InitLocals() {
 		this.id = 0;
 		this.user_name = null;
@@ -79,6 +148,13 @@ public class Member {
 		this.dateOfBirth = new Date();
 		this.pwChangeDate = new Date();
 		this.create_date = new Date();
+		this.profileId = 0;
+		this.profileUser = 0;
+		this.profileCountry = 0;
+		this.profileRegion = 0;
+		this.profileCity = 0;
+		this.profileDescription = null;
+		this.profilePhoto = null;
 
 		Config conf = new Config();
 		if(conf.getDatabaseName() != null) {
@@ -103,23 +179,38 @@ public class Member {
 		String sql = null;
 		ResultSet rs = null;
 
-		//SELECT * FROM MEMBER WHERE USER_NAME=$this.user_name;
-		try {
-			stmt = this.conn.createStatement();
-			sql = "SELECT * FROM MEMBER WHERE USER_NAME=\'" + this.user_name + "\'";
-			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				this.user_name = rs.getString("user_name");
-				this.password = rs.getString("password");
+		if(this.conn != null) {
+			//SELECT * FROM MEMBER WHERE USER_NAME=$this.user_name;
+			try {
+				stmt = this.conn.createStatement();
+				sql = "SELECT m.*, p.* FROM member AS m, profile AS p WHERE m.user_name=\'" + this.user_name + "\' and p.user = m.id";
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					this.id = rs.getInt("m.id");
+					this.user_name = rs.getString("m.user_name");
+					this.password = rs.getString("m.password");
 
-				this.dateOfBirth = rs.getDate("create_date");
-				this.pwChangeDate = rs.getDate("pw_change");
+					this.create_date = rs.getDate("m.create_date");
+					this.pwChangeDate = rs.getDate("m.pw_change");
+
+					this.profileId = rs.getInt("p.id");
+					this.profileUser = rs.getInt("p.user");
+					this.profileCountry = rs.getInt("p.country");
+					this.profileRegion = rs.getInt("p.region");
+					this.profileCity = rs.getInt("p.city");
+					this.profileDescription = rs.getString("p.description");
+					this.profilePhoto = rs.getString("p.photo");
+				}
+				rs.close();
+				stmt.close();
 			}
-			rs.close();
-			stmt.close();
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				fRet = true;
+			}
 		}
-		catch(Exception ex) {
-			System.err.println(ex.toString());
+		else {
+			System.err.println("Member.FindByName(): No database connection.  Quitting!");
 			fRet = true;
 		}
 		return fRet;
@@ -142,17 +233,22 @@ public class Member {
 		Statement stmt = null;
 		String sql = null;
 
-		try {
-			stmt = this.conn.createStatement();
-			sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
-			stmt.executeUpdate(sql);
-			stmt.close();
+		if(this.conn != null) {
+			try {
+				stmt = this.conn.createStatement();
+				sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
+				stmt.executeUpdate(sql);
+				stmt.close();
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				fRet = true;
+			}
 		}
-		catch(Exception ex) {
-			System.err.println(ex.toString());
+		else {
+			System.err.println("Member.save(): No database connection.  Quitting!");
 			fRet = true;
 		}
-
 		return fRet;
 	}
 
@@ -172,31 +268,36 @@ public class Member {
 		Statement stmt = null;
 		String sql = null;
 
-		try {
-			stmt = this.conn.createStatement();
-			// We don't actually need to know the result, just make sure we can get one.
-			// BUGBUG - We do need the ID so we can pass it back to the client.
-			sql = "SELECT * FROM member WHERE (user_name=\'" + userName + "\' AND password=\'" + password + "\'";
-			if(stmt.execute(sql) == true)
-				fRet = false;
-			else
-				fRet = true;
-
-		}
-		catch(Exception ex) {
-			System.err.println(ex.toString());
-			fRet = true;
-		}
-		finally {
+		if(this.conn != null) {
 			try {
-				if(stmt != null)
-					stmt.close();
+				stmt = this.conn.createStatement();
+				// We don't actually need to know the result, just make sure we can get one.
+				// BUGBUG - We do need the ID so we can pass it back to the client.
+				sql = "SELECT * FROM member WHERE (user_name=\'" + userName + "\' AND password=\'" + password + "\'";
+				if(stmt.execute(sql) == true)
+					fRet = false;
+				else
+					fRet = true;
+
 			}
 			catch(Exception ex) {
 				System.err.println(ex.toString());
+				fRet = true;
+			}
+			finally {
+				try {
+					if(stmt != null)
+						stmt.close();
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+				}
 			}
 		}
-
+		else {
+			System.err.println("Member.logIn(): No database connection.  Quitting!");
+			fRet = true;
+		}
 		return fRet;
 	}
 
@@ -206,37 +307,42 @@ public class Member {
 		ResultSet rs = null;
 		String sql = null;
 
-		try {
-			stmt = this.conn.createStatement();
-			//BUGBUG: Add the create_date value at this point, because it won't change
-			sql = "INSERT INTO member (user_name, password) VALUES(\'" + userName + "\',\'" + password + "\')";
-			if(stmt.execute(sql) == true) {	
-				sql = "SELECT id FROM member WHERE user_name = \'" + userName + "\' AND password = \'" + password + "\'"; 
-				rs = stmt.executeQuery(sql);
-				while(rs.next()) {
-					this.id = rs.getInt("id");
-					this.user_name = userName;
-				}
-
-				fRet = false;
-			}
-		}
-		catch(Exception ex) {
-				System.err.println(ex.toString());
-				fRet = true;
-		}
-		finally {
+		if(this.conn != null) {
 			try {
-				if(rs != null)
-					rs.close();
-				if(stmt != null)
-					stmt.close();
+				stmt = this.conn.createStatement();
+				//BUGBUG: Add the create_date value at this point, because it won't change
+				sql = "INSERT INTO member (user_name, password) VALUES(\'" + userName + "\',\'" + password + "\')";
+				if(stmt.execute(sql) == true) {	
+					sql = "SELECT id FROM member WHERE user_name = \'" + userName + "\' AND password = \'" + password + "\'"; 
+					rs = stmt.executeQuery(sql);
+					while(rs.next()) {
+						this.id = rs.getInt("id");
+						this.user_name = userName;
+					}
+
+					fRet = false;
+				}
 			}
 			catch(Exception ex) {
-				System.err.println(ex.toString());
+					System.err.println(ex.toString());
+					fRet = true;
+			}
+			finally {
+				try {
+					if(rs != null)
+						rs.close();
+					if(stmt != null)
+						stmt.close();
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+				}
 			}
 		}
-
+		else {
+			System.err.println("Member.signUp(): No database connection.  Quitting!");
+			fRet = true;
+		}
 		return fRet;
 	}
 }

@@ -1,7 +1,18 @@
+/*************************************************************/
+/* Copyright (C) 2016, PERRINN Limited.  All Rights Reserved */
+/*                                                           */
+/* This software is distributed under the Apache 2.0 license */
+/* For usage rights, please contact contact@perrinn.com      */
+/*                                                           */
+/*************************************************************/
+/* This module developed by Christopher Moran                */
+/*************************************************************/
+
 package com.perrinn.appservice.util;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,6 +29,10 @@ public class Config {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
 	}
 
+	public String getDatabaseServer() {
+		return this.dbSource;
+	}
+
 	public String getDatabaseName() {
 		return this.dbName;
 	}
@@ -28,6 +43,10 @@ public class Config {
 
 	public String getDatabasePassword() {
 		return this.dbPassword;
+	}
+
+	public void setDatabaseServer(String val) {
+		this.dbSource = val;
 	}
 
 	public void setDatabaseName(String val) {
@@ -42,7 +61,19 @@ public class Config {
 		this.dbPassword = val;
 	}
 
+	private void initLocals() {
+		this.dbSource = "localhost";
+		this.dbName = "perrapp";
+		this.dbUser = "user";
+		this.dbPassword = "password";
+	}
+
 	public Config() {
+		this.initLocals();
+		this.read();
+	}
+
+	public void read() {
 		InputStream in = null;
 		Properties props = new Properties();
 
@@ -55,6 +86,10 @@ public class Config {
 			this.dbName = props.getProperty("database");
 			this.dbUser = props.getProperty("database_user");
 			this.dbPassword = props.getProperty("database_password");
+		}
+		catch(FileNotFoundException ex) {
+			System.err.println("No config found.  Applying defaults");
+			this.save();
 		}
 		catch(Exception ex) {
 			System.err.println(ex.toString());
