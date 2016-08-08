@@ -24,6 +24,7 @@ public class Config {
 	private String dbName;
 	private String dbUser;
 	private String dbPassword;
+	private String s3Bucket;
 
 	public String getDatabaseString() {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
@@ -66,6 +67,7 @@ public class Config {
 		this.dbName = "perrapp";
 		this.dbUser = "user";
 		this.dbPassword = "password";
+		this.s3Bucket = "bucket-name";
 	}
 
 	public Config() {
@@ -86,6 +88,7 @@ public class Config {
 			this.dbName = props.getProperty("database");
 			this.dbUser = props.getProperty("database_user");
 			this.dbPassword = props.getProperty("database_password");
+			this.s3Bucket = props.getProperty("s3_bucket");
 		}
 		catch(FileNotFoundException ex) {
 			System.err.println("No config found.  Applying defaults");
@@ -118,6 +121,7 @@ public class Config {
 			props.setProperty("database", this.dbName);
 			props.setProperty("database_user", this.dbUser);
 			props.setProperty("database_password", this.dbPassword);
+			props.setProperty("s3_bucket", this.s3Bucket);
 
 			// and save them
 			props.store(out, null);
