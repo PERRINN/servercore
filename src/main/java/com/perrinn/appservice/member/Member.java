@@ -23,6 +23,7 @@ import com.perrinn.appservice.util.Config;
 @Entity
 @Table(name="member")
 public class Member {
+	private boolean needSave;
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -98,7 +99,14 @@ public class Member {
 	}
 
 	public void setId(long value) {
-		this.id = value;
+		if(this.id != value) {
+			this.id = value;
+			this.needSave = true;
+		}
+	}
+
+	public void setUserName(String value) {
+		this.user_name = value;
 	}
 
 	public void setPassword(String value) {
@@ -142,6 +150,7 @@ public class Member {
 	}
 
 	private void InitLocals() {
+		this.needSave = false;
 		this.id = 0;
 		this.user_name = null;
 		this.password = null;
@@ -168,7 +177,7 @@ public class Member {
 				this.conn = DriverManager.getConnection(this.dbUrl, this.dbUser, this.dbPass);
 			}
 			catch(Exception ex) {
-				System.err.println(ex.toString());
+//				System.err.println(ex.toString());
 			}
 		}
 	}
@@ -205,7 +214,7 @@ public class Member {
 				stmt.close();
 			}
 			catch(Exception ex) {
-				System.err.println(ex.toString());
+//				System.err.println(ex.toString());
 				fRet = true;
 			}
 		}
