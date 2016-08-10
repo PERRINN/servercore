@@ -46,6 +46,10 @@ public class Config {
 		return this.dbPassword;
 	}
 
+	public String getBucketName() {
+		return this.s3Bucket;
+	}
+
 	public void setDatabaseServer(String val) {
 		this.dbSource = val;
 	}
@@ -60,6 +64,10 @@ public class Config {
 
 	public void setDatabasePassword(String val) {
 		this.dbPassword = val;
+	}
+
+	public void setBucketName(String val) {
+		this.s3Bucket = val;
 	}
 
 	private void initLocals() {
