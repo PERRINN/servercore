@@ -1,5 +1,7 @@
 *.class
+.classpath
+.settings
+.project
 config.properties
 perrinn-pilot.json
-target/*
-/target/
+target
