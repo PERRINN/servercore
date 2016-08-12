@@ -114,47 +114,80 @@ public class Member {
 	}
 
 	public void setUserName(String value) {
-		this.user_name = value;
+		if(this.user_name != value) {
+			this.user_name = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setPassword(String value) {
-		this.password = value;
+		if(this.password != value) {
+			this.password = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setDateOfBirth(Date value) {
-		this.dateOfBirth = value;
+		if(this.dateOfBirth != value) {
+			this.dateOfBirth = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setPwChangeDate(Date value) {
-		this.pwChangeDate = value;
+		if(this.pwChangeDate != value) {
+			this.pwChangeDate = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setCreateDate(Date value) {
-		this.create_date = value;
+		if(this.create_date != value) {
+			this.create_date = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfileId(long value) {
-		this.profileId = value;
+		if(this.profileId != value) {
+			this.profileId = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfileCountry(long value) {
-		this.profileCountry = value;
+		if(this.profileCountry != value) {
+			this.profileCountry = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfileRegion(long value) {
-		this.profileRegion = value;
+		if(this.profileRegion != value) {
+			this.profileRegion = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfileCity(long value) {
-		this.profileCity = value;
+		if(this.profileCity != value) {
+			this.profileCity = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfileDescription(String value) {
-		this.profileDescription = value;
+		if(this.profileDescription != value) {
+			this.profileDescription = value;
+			this.needSave = true;
+		}
 	}
 
 	public void setProfilePhoto(String value) {
-		this.profilePhoto = value;
+		if(this.profilePhoto != value) {
+			this.profilePhoto = value;
+			this.needSave = true;
+		}
 	}
 
 	private void InitLocals() {
@@ -257,6 +290,14 @@ public class Member {
 			try {
 				stmt = this.conn.createStatement();
 				sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
+				stmt.executeUpdate(sql);
+				stmt.close();
+				stmt = this.conn.createStatement();
+				sql = "UPDATE PROFILE SET country=" + String.valueOf(this.profileCountry)
+					+ ",region=" + String.valueOf(this.profileRegion)
+					+ ",city=" + String.valueOf(this.profileCity)
+					+ ",description=\'" + this.profileDescription + "\'"
+					+ ",photo=\'" + this.profilePhoto + "\'";
 				stmt.executeUpdate(sql);
 				stmt.close();
 			}
