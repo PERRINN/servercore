@@ -1,11 +1,24 @@
+/*************************************************************/
+/* Copyright (C) 2016, PERRINN Limited.  All Rights Reserved */
+/*                                                           */
+/* This software is distributed under the Apache 2.0 license */
+/* For usage rights, please contact contact@perrinn.com      */
+/*                                                           */
+/*************************************************************/
+/* This module developed by Christopher Moran                */
+/*************************************************************/
+
 package com.perrinn.appservice.util;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import com.google.firebase.FirebaseOptions;
 
 public class Config {
 
@@ -13,9 +26,16 @@ public class Config {
 	private String dbName;
 	private String dbUser;
 	private String dbPassword;
+	private String s3Bucket;
+	private String firebasePath;
+	private String firebaseUrl;
 
 	public String getDatabaseString() {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
+	}
+
+	public String getDatabaseServer() {
+		return this.dbSource;
 	}
 
 	public String getDatabaseName() {
@@ -30,6 +50,22 @@ public class Config {
 		return this.dbPassword;
 	}
 
+	public String getBucketName() {
+		return this.s3Bucket;
+	}
+
+	public String getFirebasePath() {
+		return this.firebasePath;
+	}
+
+	public String getFirebaseUrl() {
+		return this.firebaseUrl;
+	}
+
+	public void setDatabaseServer(String val) {
+		this.dbSource = val;
+	}
+
 	public void setDatabaseName(String val) {
 		this.dbName = val;
 	}
@@ -42,7 +78,26 @@ public class Config {
 		this.dbPassword = val;
 	}
 
+	public void setBucketName(String val) {
+		this.s3Bucket = val;
+	}
+
+	private void initLocals() {
+		this.dbSource = "localhost";
+		this.dbName = "perrapp";
+		this.dbUser = "user";
+		this.dbPassword = "password";
+		this.s3Bucket = "bucket-name";
+		this.firebasePath = "perrinn-creds.json";
+		this.firebaseUrl = "https://perrinn-pilot.firebaseio.com/";
+	}
+
 	public Config() {
+		this.initLocals();
+		this.read();
+	}
+
+	public void read() {
 		InputStream in = null;
 		Properties props = new Properties();
 
@@ -55,6 +110,13 @@ public class Config {
 			this.dbName = props.getProperty("database");
 			this.dbUser = props.getProperty("database_user");
 			this.dbPassword = props.getProperty("database_password");
+			this.s3Bucket = props.getProperty("s3_bucket");
+			this.firebasePath = props.getProperty("firebase_json");
+			this.firebaseUrl = props.getProperty("firebase_url");
+		}
+		catch(FileNotFoundException ex) {
+			System.err.println("No config found.  Applying defaults");
+			this.save();
 		}
 		catch(Exception ex) {
 			System.err.println(ex.toString());
@@ -83,6 +145,9 @@ public class Config {
 			props.setProperty("database", this.dbName);
 			props.setProperty("database_user", this.dbUser);
 			props.setProperty("database_password", this.dbPassword);
+			props.setProperty("s3_bucket", this.s3Bucket);
+			props.setProperty("firebase_json", this.firebasePath);
+			props.setProperty("firebase_url", this.firebaseUrl);
 
 			// and save them
 			props.store(out, null);

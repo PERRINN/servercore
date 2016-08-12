@@ -20,11 +20,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 
 	@RequestMapping(value="/Member/LogMeIn", method=RequestMethod.GET)
-	public @ResponseBody String getCheckDivision(@RequestParam("MI") String sMid) {
+	public @ResponseBody String logMeIn(@RequestParam("MI") String sMid, @RequestParam("MH") String sHash) {
 		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
 		Member m = new Member();
+		if(m.logIn(sMid, sHash) == false) {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "OK");
+		}
+		else {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
+		}
+	}
 
-		return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
+	@RequestMapping(value="/Member/SignMeUp", method=RequestMethod.GET)
+	public @ResponseBody String signMeUp(@RequestParam("MI") String sMid, @RequestParam("MH") String sHash) {
+		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
+
+		Member m = new Member();
+		if(m.signUp(sMid, sHash) == false) {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "OK");
+		}
+		else {
+			return String.format(template, "Member", String.valueOf(m.getId()), "AuthState", "NONE");
+		}
 	}
 }
