@@ -15,8 +15,10 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import com.google.firebase.FirebaseOptions;
 
 public class Config {
 
@@ -25,6 +27,8 @@ public class Config {
 	private String dbUser;
 	private String dbPassword;
 	private String s3Bucket;
+	private String firebasePath;
+	private String firebaseUrl;
 
 	public String getDatabaseString() {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
@@ -48,6 +52,14 @@ public class Config {
 
 	public String getBucketName() {
 		return this.s3Bucket;
+	}
+
+	public String getFirebasePath() {
+		return this.firebasePath;
+	}
+
+	public String getFirebaseUrl() {
+		return this.firebaseUrl;
 	}
 
 	public void setDatabaseServer(String val) {
@@ -76,6 +88,8 @@ public class Config {
 		this.dbUser = "user";
 		this.dbPassword = "password";
 		this.s3Bucket = "bucket-name";
+		this.firebasePath = "perrinn-creds.json";
+		this.firebaseUrl = "https://perrinn-pilot.firebaseio.com/";
 	}
 
 	public Config() {
@@ -97,6 +111,8 @@ public class Config {
 			this.dbUser = props.getProperty("database_user");
 			this.dbPassword = props.getProperty("database_password");
 			this.s3Bucket = props.getProperty("s3_bucket");
+			this.firebasePath = props.getProperty("firebase_json");
+			this.firebaseUrl = props.getProperty("firebase_url");
 		}
 		catch(FileNotFoundException ex) {
 			System.err.println("No config found.  Applying defaults");
@@ -130,6 +146,8 @@ public class Config {
 			props.setProperty("database_user", this.dbUser);
 			props.setProperty("database_password", this.dbPassword);
 			props.setProperty("s3_bucket", this.s3Bucket);
+			props.setProperty("firebase_json", this.firebasePath);
+			props.setProperty("firebase_url", this.firebaseUrl);
 
 			// and save them
 			props.store(out, null);

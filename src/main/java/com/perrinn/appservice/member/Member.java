@@ -17,8 +17,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.UUID;
 import java.sql.*;
 import com.perrinn.appservice.util.Config;
+import java.io.FileInputStream;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 @Entity
 @Table(name="member")
@@ -49,6 +54,9 @@ public class Member {
 	private String dbUrl;
 	private String dbUser;
 	private String dbPass;
+	private String firebasePath;
+	private String firebaseUrl;
+	private String customToken;
 
 	public long getId() {
 		return this.id;
@@ -164,6 +172,7 @@ public class Member {
 		this.profileCity = 0;
 		this.profileDescription = null;
 		this.profilePhoto = null;
+		this.customToken = null;
 
 		Config conf = new Config();
 		if(conf.getDatabaseName() != null) {
@@ -171,6 +180,8 @@ public class Member {
 			this.dbUrl = conf.getDatabaseString();
 			this.dbUser = conf.getDatabaseUser();
 			this.dbPass = conf.getDatabasePassword();
+			this.firebasePath = conf.getFirebasePath();
+			this.firebaseUrl = conf.getFirebaseUrl();
 
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -274,6 +285,8 @@ public class Member {
 
 	public boolean logIn(String userName, String password) {
 		boolean fRet = false;
+		String uuid = null;
+/*
 		Statement stmt = null;
 		String sql = null;
 
@@ -307,6 +320,24 @@ public class Member {
 			System.err.println("Member.logIn(): No database connection.  Quitting!");
 			fRet = true;
 		}
+*/
+		// Change to Firebase Authentication
+		try {
+			FirebaseOptions options = new FirebaseOptions.Builder()
+				.setServiceAccount(new FileInputStream(this.firebasePath))
+				.setDatabaseUrl(this.firebaseUrl)
+				.build();
+			FirebaseApp.initializeApp(options);
+			uuid = UUID.randomUUID().toString();
+			System.out.println("DEBUG: uuid: " + uuid);
+			this.customToken = FirebaseAuth.getInstance().createCustomToken(uuid);
+			System.out.println("Custom Token: " + this.customToken);
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			fRet = true;
+		}
+
 		return fRet;
 	}
 

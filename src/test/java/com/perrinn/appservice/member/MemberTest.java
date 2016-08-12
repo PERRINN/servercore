@@ -124,4 +124,10 @@ public class MemberTest {
 			Assert.assertEquals(String.valueOf(l), m.getProfilePhoto());
 		}
 	}
+
+	@Test
+	public void testLogin() {
+		Member m = new Member();
+		Assert.assertEquals(false, m.logIn("user", "password"));
+	}
 }

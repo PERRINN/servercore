@@ -13,12 +13,10 @@ public class ConfigTest {
 		while (p < 10) {
 			long l = r.nextLong();
 			c.setDatabaseServer(String.valueOf(l));
-			c.save();
-			c.read();
 			Assert.assertEquals(String.valueOf(l), c.getDatabaseServer());
 			p++;
 		}
 		c.setDatabaseServer("localhost");
-		c.save();
+//		c.save();
 	}
 }
