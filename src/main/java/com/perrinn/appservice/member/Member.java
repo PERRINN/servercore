@@ -90,8 +90,107 @@ public class Member {
 		return this.profileCountry;
 	}
 
+	public String getProfileCountryName() {
+		String country = null;
+		Statement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		try {
+			if(this.conn != null) {
+				stmt = this.conn.createStatement();
+				sql = "SELECT country_name from country WHERE id=" + this.profileCountry;
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					country = rs.getString("country_name");
+				}
+			}
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			country = null;
+		}
+		finally {
+			try {
+				if(rs != null)
+					rs.close();
+			}
+			catch(Exception ex) {
+				System.err.println();
+			}
+		}
+
+		return country;
+	}
+
 	public long getProfileRegion() {
 		return this.profileRegion;
+	}
+
+	public String getProfileRegionName() {
+		String region = null;
+		Statement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		try {
+			if(this.conn != null) {
+				stmt = this.conn.createStatement();
+				sql = "SELECT region_name from region WHERE id=" + this.profileRegion;
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					region = rs.getString("region_name");
+				}
+			}
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			region = null;
+		}
+		finally {
+			try {
+				if(rs != null)
+					rs.close();
+			}
+			catch(Exception ex) {
+				System.err.println();
+			}
+		}
+
+		return region;
+	}
+
+	public String getProfileCityName() {
+		String city = null;
+		Statement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		try {
+			if(this.conn != null) {
+				stmt = this.conn.createStatement();
+				sql = "SELECT city_name from city WHERE id=" + this.profileCity;
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					city = rs.getString("city_name");
+				}
+			}
+		}
+		catch(Exception ex) {
+			System.err.println(ex.toString());
+			city = null;
+		}
+		finally {
+			try {
+				if(rs != null)
+					rs.close();
+			}
+			catch(Exception ex) {
+				System.err.println();
+			}
+		}
+
+		return city;
 	}
 
 	public long getProfileCity() {
