@@ -10,3 +10,7 @@ data_source = db.changeme.net
 database = perrapp
 database_user = perrchangeme
 database_password = changemetoo
+firebase_url=https\://perrinn-pilot.firebaseio.com/
+firebase_json=perrinn-pilot.json
+s3_bucket=bucket-name
+redis_name=redis.changeme.net
