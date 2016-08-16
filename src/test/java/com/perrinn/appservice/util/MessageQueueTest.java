@@ -12,6 +12,7 @@ package com.perrinn.appservice.util;
 
 import java.util.Random;
 import java.util.List;
+import org.junit.Ignore;
 import org.junit.Test;
 import com.amazonaws.services.sqs.model.Message;
 import org.junit.Assert;
@@ -19,7 +20,7 @@ import org.junit.Assert;
 
 public class MessageQueueTest {
 	private static boolean runLiveTest = false;
-	@Test
+	@Ignore
 	public void testCreateQueue() {
 		MessageQueue m = new MessageQueue();
 		if(runLiveTest == true) {
@@ -29,7 +30,7 @@ public class MessageQueueTest {
 		}
 	}
 	
-	@Test
+	@Ignore
 	public void testUseQueue() {
 		if(runLiveTest == true) {
 			MessageQueue m = new MessageQueue();
