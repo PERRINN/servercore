@@ -17,7 +17,7 @@ public class MemberTest {
 		}
 	}
 
-	@Test
+	@Ignore
 	public void testUserName() {
 		Member m = new Member();
 		Random r = new Random();
