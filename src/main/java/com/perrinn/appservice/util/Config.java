@@ -29,6 +29,7 @@ public class Config {
 	private String s3Bucket;
 	private String firebasePath;
 	private String firebaseUrl;
+	private String queueName;
 
 	public String getDatabaseString() {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
@@ -62,6 +63,10 @@ public class Config {
 		return this.firebaseUrl;
 	}
 
+	public String getQueueName() {
+		return this.queueName;
+	}
+
 	public void setDatabaseServer(String val) {
 		this.dbSource = val;
 	}
@@ -82,6 +87,10 @@ public class Config {
 		this.s3Bucket = val;
 	}
 
+	public void setQueueName(String val) {
+		this.queueName = val;
+	}
+
 	private void initLocals() {
 		this.dbSource = "localhost";
 		this.dbName = "perrapp";
@@ -90,6 +99,7 @@ public class Config {
 		this.s3Bucket = "bucket-name";
 		this.firebasePath = "perrinn-creds.json";
 		this.firebaseUrl = "https://perrinn-pilot.firebaseio.com/";
+		this.queueName = "messagequeue";
 	}
 
 	public Config() {
@@ -113,6 +123,7 @@ public class Config {
 			this.s3Bucket = props.getProperty("s3_bucket");
 			this.firebasePath = props.getProperty("firebase_json");
 			this.firebaseUrl = props.getProperty("firebase_url");
+			this.queueName = props.getProperty("message_queue");
 		}
 		catch(FileNotFoundException ex) {
 			System.err.println("No config found.  Applying defaults");
@@ -148,6 +159,7 @@ public class Config {
 			props.setProperty("s3_bucket", this.s3Bucket);
 			props.setProperty("firebase_json", this.firebasePath);
 			props.setProperty("firebase_url", this.firebaseUrl);
+			props.setProperty("message_queue", this.queueName);
 
 			// and save them
 			props.store(out, null);
