@@ -6,10 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.*;
+import com.perrinn.appservice.util.Config;
 
 @Entity
 @Table(name="country")
 public class Country {
+	private Connection conn;
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -18,13 +21,16 @@ public class Country {
 	private String countryName;
 	private boolean hasDivision;
 	private String divisionName;
+	private boolean needSave;
 
 	private void initLocals() {
+		this.conn = null;
 		this.id = 0;
 		this.countryCode = null;
 		this.countryName = null;
 		this.hasDivision = false;
 		this.divisionName = null;
+		this.needSave = false;
 	}
 
 	// Getters
@@ -55,14 +61,17 @@ public class Country {
 	// Setters
 	public void setId(long value) {
 		this.id = value;
+		this.needSave = true;
 	}
 
 	public void setCountryCode(String value) {
 		this.countryCode = value;
+		this.needSave = true;
 	}
 
 	public void setCountryName(String value) {
 		this.countryName = value;
+		this.needSave = true;
 	}
 
 	@Override
@@ -72,6 +81,7 @@ public class Country {
 
 	public void setDivisionName(String value) {
 		this.divisionName = value;
+		this.needSave = true;
 	}
 
 	public Country() {
@@ -81,10 +91,175 @@ public class Country {
 	public Country(String code) {
 		this.initLocals();
 		this.countryCode = code;
+		this.loadByCode();
 	}
 
 	public Country(long id) {
 		this.initLocals();
 		this.id = id;
+		this.loadById();
+	}
+
+	public boolean open() {
+		boolean ret = false;
+
+		Config conf = new Config();
+		if(conf.getDatabaseName() != null) {
+			try {
+				Class.forName(conf.getDatabaseDriver());
+				this.conn = DriverManager.getConnection(conf.getDatabaseString(), conf.getDatabaseUser(), conf.getDatabasePassword());
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	public boolean close() {
+    	boolean ret = false;
+    	
+    	try {
+    		if(this.conn.isClosed() == false) {
+    			this.conn.close();
+    		}
+    	}
+    	catch(Exception ex) {
+    		System.err.println(ex.toString());
+    	}
+    	
+    	return ret;
+	}
+
+	long loadById() {
+		PreparedStatement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		if(this.conn != null) {
+			// Connection is initialised.
+			try {
+				sql = "select * from country where id= ?";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setLong(1, this.id);
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					this.countryCode = rs.getString("country_code");
+					this.countryName = rs.getString("country_name");
+					this.hasDivision = rs.getBoolean("has_division");
+					this.divisionName = rs.getString("division_name");
+				}
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				this.id = 0; // The entry is not available.
+			} 
+			finally {
+				try {
+					if(rs != null) {
+						rs.close();
+					}
+					if(stmt != null) {
+						stmt.close();
+					}
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+				}
+			}
+		}
+		else {
+			this.id = 0;	// Database not open.  Didn't get anything
+		}
+
+		return this.id;
+	}
+
+	long loadByCode() {
+		PreparedStatement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		if(this.conn != null) {
+			// Connection is initialised.
+			try {
+				sql = "select * from country where country_name= ?";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.countryCode);
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					this.countryCode = rs.getString("country_code");
+					this.countryName = rs.getString("country_name");
+					this.hasDivision = rs.getBoolean("has_division");
+					this.divisionName = rs.getString("division_name");
+				}
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				this.id = 0; // The entry is not available.
+			} 
+			finally {
+				try {
+					if(rs != null) {
+						rs.close();
+					}
+					if(stmt != null) {
+						stmt.close();
+					}
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+				}
+			}
+		}
+		else {
+			this.id = 0;	// Database not open.  Didn't get anything
+		}
+
+		return this.id;
+	}
+
+	public boolean save() {
+		boolean ret = false;
+		PreparedStatement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		if(this.conn != null) {
+			// Connection is initialised.
+			try {
+				sql = "update country set country_code=?, country_name=?, has_division=?, division_name=? where id= ?";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.countryCode);
+				stmt.setString(2, this.countryName);
+				stmt.setBoolean(3, this.hasDivision);
+				stmt.setString(4, this.divisionName);
+				stmt.setLong(5, this.id);
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				this.id = 0; // The entry is not available.
+			} 
+			finally {
+				try {
+					if(rs != null) {
+						rs.close();
+					}
+					if(stmt != null) {
+						stmt.close();
+					}
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+					ret = true;
+				}
+			}
+		}
+		else {
+			ret = true;	// Database not open.  Didn't get anything
+		}
+
+		return ret;
 	}
 }

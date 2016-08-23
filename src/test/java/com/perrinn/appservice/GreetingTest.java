@@ -5,6 +5,7 @@ package com.perrinn.appservice;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,7 +17,7 @@ public class GreetingTest {
 	/**
 	 * Test method for {@link com.perrinn.appservice.Greeting#Greeting(long, java.lang.String)}.
 	 */
-	@Test
+	@Ignore
 	public void testGreeting() {
 		assertFalse(false);
 	}
@@ -24,7 +25,7 @@ public class GreetingTest {
 	/**
 	 * Test method for {@link com.perrinn.appservice.Greeting#getId()}.
 	 */
-	@Test
+	@Ignore
 	public void testGetId() {
 		Greeting g = new Greeting(0, "Hello");
 		assertEquals(0, g.getId());
@@ -33,7 +34,7 @@ public class GreetingTest {
 	/**
 	 * Test method for {@link com.perrinn.appservice.Greeting#getContent()}.
 	 */
-	@Test
+	@Ignore
 	public void testGetContent() {
 		Greeting g = new Greeting(0, "Hello");
 		assertEquals("Hello", g.getContent());
