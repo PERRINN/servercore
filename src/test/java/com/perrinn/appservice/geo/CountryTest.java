@@ -21,18 +21,28 @@ public class CountryTest {
 
 	@Test
 	public void testCode() {
-		Country c = new Country("XXX");
-		Assert.assertEquals("XXX", c.getCountryCode());
-		c.setCountryCode("YYY");
-		Assert.assertEquals("YYY", c.getCountryCode());
+		Country c = new Country();
+		Random r = new Random();
+		int p = 0;
+		while (p < 1000) {
+			long l = r.nextLong();
+			c.setCountryCode(String.valueOf(l));
+			Assert.assertEquals(String.valueOf(l), c.getCountryCode());
+			p++;
+		}
 	}
 
 	@Test
 	public void testName() {
-		Country c = new Country("XXX");
-		Assert.assertEquals("XXX", c.getCountryCode());
-		c.setCountryName("SeaLand");
-		Assert.assertEquals("SeaLand", c.getCountryName());
+		Country c = new Country();
+		Random r = new Random();
+		int p = 0;
+		while (p < 1000) {
+			long l = r.nextLong();
+			c.setCountryName(String.valueOf(l));
+			Assert.assertEquals(String.valueOf(l), c.getCountryName());
+			p++;
+		}
 	}
 
 	@Test
@@ -47,9 +57,14 @@ public class CountryTest {
 
 	@Test
 	public void testDivisionName() {
-		Country c = new Country("XXX");
-		Assert.assertEquals("XXX", c.getCountryCode());
-		c.setDivisionName("Sand Island");
-		Assert.assertEquals("Sand Island", c.getDivisionName());
+		Country c = new Country();
+		Random r = new Random();
+		int p = 0;
+		while (p < 1000) {
+			long l = r.nextLong();
+			c.setDivisionName(String.valueOf(l));
+			Assert.assertEquals(String.valueOf(l), c.getDivisionName());
+			p++;
+		}
 	}
 }

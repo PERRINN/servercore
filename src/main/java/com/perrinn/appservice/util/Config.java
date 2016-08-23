@@ -30,6 +30,7 @@ public class Config {
 	private String firebasePath;
 	private String firebaseUrl;
 	private String queueName;
+	private String dbDriver;
 
 	public String getDatabaseString() {
 		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
@@ -67,6 +68,10 @@ public class Config {
 		return this.queueName;
 	}
 
+	public String getDatabaseDriver() {
+		return this.dbDriver;
+	}
+
 	public void setDatabaseServer(String val) {
 		this.dbSource = val;
 	}
@@ -91,6 +96,10 @@ public class Config {
 		this.queueName = val;
 	}
 
+	public void setDatabaseDriver(String val) {
+		this.dbDriver = val;
+	}
+
 	private void initLocals() {
 		this.dbSource = "localhost";
 		this.dbName = "perrapp";
@@ -100,6 +109,7 @@ public class Config {
 		this.firebasePath = "perrinn-creds.json";
 		this.firebaseUrl = "https://perrinn-pilot.firebaseio.com/";
 		this.queueName = "messagequeue";
+		this.dbDriver = "com.mysql.jdbc.Driver";
 	}
 
 	public Config() {
@@ -124,6 +134,7 @@ public class Config {
 			this.firebasePath = props.getProperty("firebase_json");
 			this.firebaseUrl = props.getProperty("firebase_url");
 			this.queueName = props.getProperty("message_queue");
+			this.dbDriver = props.getProperty("database_driver");
 		}
 		catch(FileNotFoundException ex) {
 			System.err.println("No config found.  Applying defaults");
@@ -156,6 +167,7 @@ public class Config {
 			props.setProperty("database", this.dbName);
 			props.setProperty("database_user", this.dbUser);
 			props.setProperty("database_password", this.dbPassword);
+			props.setProperty("database_driver", this.dbDriver);
 			props.setProperty("s3_bucket", this.s3Bucket);
 			props.setProperty("firebase_json", this.firebasePath);
 			props.setProperty("firebase_url", this.firebaseUrl);
