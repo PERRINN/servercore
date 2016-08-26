@@ -390,22 +390,26 @@ public class Member {
 	public boolean save() {
 		boolean fRet = false;
 
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		String sql = null;
 
 		if(this.open() == false) {
 			try {
-				stmt = this.conn.createStatement();
-				sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
-				stmt.executeUpdate(sql);
+				sql = "UPDATE MEMBER SET user_name=?,password=? where id=";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.user_name);
+				stmt.setString(2, this.password);
+				stmt.setLong(3, this.id);
+				stmt.executeUpdate();
 				stmt.close();
-				stmt = this.conn.createStatement();
-				sql = "UPDATE PROFILE SET country=" + String.valueOf(this.profileCountry)
-					+ ",region=" + String.valueOf(this.profileRegion)
-					+ ",city=" + String.valueOf(this.profileCity)
-					+ ",description=\'" + this.profileDescription + "\'"
-					+ ",photo=\'" + this.profilePhoto + "\'";
-				stmt.executeUpdate(sql);
+				sql = "UPDATE PROFILE SET country=?,region=?,city=,description=?,photo=?";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setLong(1, this.profileCountry);
+				stmt.setLong(2, this.profileRegion);
+				stmt.setLong(3, this.profileCity);
+				stmt.setString(4, this.profileDescription);
+				stmt.setString(5, this.profilePhoto);
+				stmt.executeUpdate();
 				stmt.close();
 			}
 			catch(Exception ex) {
