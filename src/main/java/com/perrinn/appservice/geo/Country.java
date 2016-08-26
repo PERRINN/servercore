@@ -264,4 +264,47 @@ public class Country {
 
 		return ret;
 	}
+
+	public boolean add() {
+		boolean ret = false;
+		PreparedStatement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		if(this.open() == false) {
+			// Connection is initialised.
+			try {
+				sql = "insert into country (country_code,country_name,has_division,division_name) values(?,?,?,?)";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.countryCode);
+				stmt.setString(2, this.countryName);
+				stmt.setBoolean(3, this.hasDivision);
+				stmt.setString(4, this.divisionName);
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				this.id = 0; // The entry is not available.
+			} 
+			finally {
+				try {
+					if(rs != null) {
+						rs.close();
+					}
+					if(stmt != null) {
+						stmt.close();
+					}
+					this.close();
+				}
+				catch(Exception ex) {
+					System.err.println(ex.toString());
+					ret = true;
+				}
+			}
+		}
+		else {
+			ret = true;	// Database not open.  Didn't get anything
+		}
+
+		return ret;
+	}
 }
