@@ -7,8 +7,7 @@ import org.junit.Test;
 public class CountryTest {
 	@Test
 	public void testId() {
-		Country c = new Country("XXX");
-		Assert.assertEquals("XXX", c.getCountryCode());
+		Country c = new Country();
 		Random r = new Random();
 		int p = 0;
 		while (p < 1000) {
@@ -47,8 +46,7 @@ public class CountryTest {
 
 	@Test
 	public void testDivision() {
-		Country c = new Country("XXX");
-		Assert.assertEquals("XXX", c.getCountryCode());
+		Country c = new Country();
 		c.setHasDivision(true);
 		Assert.assertEquals(true, c.getHasDivision());
 		c.setHasDivision(false);

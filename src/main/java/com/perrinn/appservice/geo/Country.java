@@ -100,20 +100,19 @@ public class Country {
 		this.loadById();
 	}
 
-	public boolean open() {
+	private boolean open() {
 		boolean ret = false;
 
 		Config conf = new Config();
-		if(conf.getDatabaseName() != null) {
-			try {
-				Class.forName(conf.getDatabaseDriver());
-				this.conn = DriverManager.getConnection(conf.getDatabaseString(), conf.getDatabaseUser(), conf.getDatabasePassword());
-			}
-			catch(Exception ex) {
-				System.err.println(ex.toString());
-				ret = true;
-			}
+		try {
+			Class.forName(conf.getDatabaseDriver());
+			this.conn = DriverManager.getConnection(conf.getDatabaseString(), conf.getDatabaseUser(), conf.getDatabasePassword());
 		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage());
+			ret = true;
+		}
+
 		return ret;
 	}
 
@@ -137,7 +136,7 @@ public class Country {
 		String sql = null;
 		ResultSet rs = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			// Connection is initialised.
 			try {
 				sql = "select * from country where id= ?";
@@ -163,6 +162,7 @@ public class Country {
 					if(stmt != null) {
 						stmt.close();
 					}
+					this.close();
 				}
 				catch(Exception ex) {
 					System.err.println(ex.toString());
@@ -181,7 +181,7 @@ public class Country {
 		String sql = null;
 		ResultSet rs = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			// Connection is initialised.
 			try {
 				sql = "select * from country where country_name= ?";
@@ -207,6 +207,7 @@ public class Country {
 					if(stmt != null) {
 						stmt.close();
 					}
+					this.close();
 				}
 				catch(Exception ex) {
 					System.err.println(ex.toString());
@@ -226,7 +227,7 @@ public class Country {
 		String sql = null;
 		ResultSet rs = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			// Connection is initialised.
 			try {
 				sql = "update country set country_code=?, country_name=?, has_division=?, division_name=? where id= ?";
@@ -249,6 +250,7 @@ public class Country {
 					if(stmt != null) {
 						stmt.close();
 					}
+					this.close();
 				}
 				catch(Exception ex) {
 					System.err.println(ex.toString());
