@@ -310,16 +310,17 @@ public class Member {
 
 	private boolean FindByName() {
 		boolean ret = false;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		String sql = null;
 		ResultSet rs = null;
 
 		if(this.open() == false) {
 			//SELECT * FROM MEMBER WHERE USER_NAME=$this.user_name;
 			try {
-				stmt = this.conn.createStatement();
-				sql = "SELECT m.*, p.* FROM member AS m, profile AS p WHERE m.user_name=\'" + this.user_name + "\' and p.user = m.id";
-				rs = stmt.executeQuery(sql);
+				sql = "SELECT m.*, p.* FROM member AS m, profile AS p WHERE m.user_name=? and p.user = m.id";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.user_name);
+				rs = stmt.executeQuery();
 				while(rs.next()) {
 					this.id = rs.getInt("m.id");
 					this.user_name = rs.getString("m.user_name");
