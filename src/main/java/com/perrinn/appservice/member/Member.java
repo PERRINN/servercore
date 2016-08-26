@@ -305,33 +305,16 @@ public class Member {
 		this.profileDescription = null;
 		this.profilePhoto = null;
 		this.customToken = null;
-
-		Config conf = new Config();
-		if(conf.getDatabaseName() != null) {
-			this.conn = null;
-			this.dbUrl = conf.getDatabaseString();
-			this.dbUser = conf.getDatabaseUser();
-			this.dbPass = conf.getDatabasePassword();
-			this.firebasePath = conf.getFirebasePath();
-			this.firebaseUrl = conf.getFirebaseUrl();
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				this.conn = DriverManager.getConnection(this.dbUrl, this.dbUser, this.dbPass);
-			}
-			catch(Exception ex) {
-//				System.err.println(ex.toString());
-			}
-		}
+		this.conn = null;
 	}
 
 	private boolean FindByName() {
-		boolean fRet = false;
+		boolean ret = false;
 		Statement stmt = null;
 		String sql = null;
 		ResultSet rs = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			//SELECT * FROM MEMBER WHERE USER_NAME=$this.user_name;
 			try {
 				stmt = this.conn.createStatement();
@@ -353,19 +336,28 @@ public class Member {
 					this.profileDescription = rs.getString("p.description");
 					this.profilePhoto = rs.getString("p.photo");
 				}
-				rs.close();
-				stmt.close();
 			}
 			catch(Exception ex) {
 //				System.err.println(ex.toString());
-				fRet = true;
+				ret = true;
+			}
+			finally {
+				try {
+					rs.close();
+					stmt.close();
+					this.close();
+				}
+				catch(Exception ex) {
+					System.err.println(ex.getMessage());
+					ret = true;
+				}
 			}
 		}
 		else {
 			System.err.println("Member.FindByName(): No database connection.  Quitting!");
-			fRet = true;
+			ret = true;
 		}
-		return fRet;
+		return ret;
 	}
 
 	public Member() {
@@ -379,13 +371,29 @@ public class Member {
 		this.FindByName();
 	}
 
+	private boolean open() {
+		boolean ret = false;
+
+		Config conf = new Config();
+		try {
+			Class.forName(conf.getDatabaseDriver());
+			this.conn = DriverManager.getConnection(conf.getDatabaseString(), conf.getDatabaseUser(), conf.getDatabasePassword());
+		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage());
+			ret = true;
+		}
+
+		return ret;
+	}
+
 	public boolean save() {
 		boolean fRet = false;
 
 		Statement stmt = null;
 		String sql = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			try {
 				stmt = this.conn.createStatement();
 				sql = "UPDATE MEMBER SET user_name=\'" + this.user_name + "\',password=\'" + this.password + "\' where id=" + this.id;
@@ -487,7 +495,7 @@ public class Member {
 		ResultSet rs = null;
 		String sql = null;
 
-		if(this.conn != null) {
+		if(this.open() == false) {
 			try {
 				stmt = this.conn.createStatement();
 				//BUGBUG: Add the create_date value at this point, because it won't change
@@ -513,6 +521,7 @@ public class Member {
 						rs.close();
 					if(stmt != null)
 						stmt.close();
+					this.close();
 				}
 				catch(Exception ex) {
 					System.err.println(ex.toString());

@@ -33,7 +33,16 @@ public class Config {
 	private String dbDriver;
 
 	public String getDatabaseString() {
-		return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
+		if(this.dbDriver.equals("com.mysql.jdbc.Driver"))
+			return "jdbc:mysql://" + this.dbSource + "/" + this.dbName;
+
+		if(this.dbDriver.equals("org.h2.Driver"))
+			return "jdbc:h2:mem:" + this.dbName + ";DB_CLOSE_DELAY=-1"; 
+
+		if(this.dbDriver.equals("oracle.jdbc.driver.OracleDriver"))
+			return "jdbc:oracle:thin:" + this.dbUser + "/" + this.dbName + "@" + this.dbName;
+		
+		return null;
 	}
 
 	public String getDatabaseServer() {
