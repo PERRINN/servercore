@@ -4,10 +4,10 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.Assert;
 
-public class TeamTest {
+public class TeamMemberTest {
 	@Test
 	public void testId() {
-		Team t = new Team();
+		TeamMember t = new TeamMember();
 		Random r = new Random();
 		int p = 0;
 		while (p < 1000) {
@@ -19,27 +19,27 @@ public class TeamTest {
 	}
 
 	@Test
-	public void testTeamOwner() {
-		Team t = new Team();
+	public void testTeam() {
+		TeamMember t = new TeamMember();
 		Random r = new Random();
 		int p = 0;
 		while (p < 1000) {
 			long l = r.nextLong();
-			t.setTeamOwner(l);
-			Assert.assertEquals(l, t.getTeamOwner());
+			t.setTeam(l);
+			Assert.assertEquals(l, t.getTeam());
 			p++;
 		}
 	}
 
 	@Test
-	public void testTeamName() {
-		Team t = new Team();
+	public void testTeamMember() {
+		TeamMember t = new TeamMember();
 		Random r = new Random();
 		int p = 0;
 		while (p < 1000) {
 			long l = r.nextLong();
-			t.setTeamName(String.valueOf(l));
-			Assert.assertEquals(String.valueOf(l), t.getTeamName());
+			t.setTeamMember(l);
+			Assert.assertEquals(l, t.getTeamMember());
 			p++;
 		}
 	}
