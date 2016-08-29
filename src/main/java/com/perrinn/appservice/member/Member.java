@@ -547,7 +547,7 @@ public class Member {
 		}
 		catch(Exception ex) {
 			System.err.println(ex.toString());
-			fRet = true;
+//			fRet = true;
 		}
 
 		return fRet;
@@ -559,43 +559,9 @@ public class Member {
 		ResultSet rs = null;
 		String sql = null;
 
-		if(this.open() == false) {
-			try {
-				stmt = this.conn.createStatement();
-				//BUGBUG: Add the create_date value at this point, because it won't change
-				sql = "INSERT INTO member (user_name, password) VALUES(\'" + userName + "\',\'" + password + "\')";
-				if(stmt.execute(sql) == true) {	
-					sql = "SELECT id FROM member WHERE user_name = \'" + userName + "\' AND password = \'" + password + "\'"; 
-					rs = stmt.executeQuery(sql);
-					while(rs.next()) {
-						this.id = rs.getInt("id");
-						this.user_name = userName;
-					}
+		this.user_name = userName;
+		this.password = password;
 
-					fRet = false;
-				}
-			}
-			catch(Exception ex) {
-					System.err.println(ex.toString());
-					fRet = true;
-			}
-			finally {
-				try {
-					if(rs != null)
-						rs.close();
-					if(stmt != null)
-						stmt.close();
-					this.close();
-				}
-				catch(Exception ex) {
-					System.err.println(ex.toString());
-				}
-			}
-		}
-		else {
-			System.err.println("Member.signUp(): No database connection.  Quitting!");
-			fRet = true;
-		}
-		return fRet;
+		return this.add();
 	}
 }

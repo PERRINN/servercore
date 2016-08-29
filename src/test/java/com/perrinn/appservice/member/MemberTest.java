@@ -6,8 +6,55 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Ignore;
 import java.util.Date;
+import java.sql.*;
+import com.perrinn.appservice.util.Config;
 
 public class MemberTest {
+
+	@Test
+	public void aaInit() {
+		Connection conn = null;
+		Statement stmt = null;
+		String sql;
+		try {
+			Config conf = new Config();
+			Class.forName(conf.getDatabaseDriver());
+			conn = DriverManager.getConnection(conf.getDatabaseString(), conf.getDatabaseUser(), conf.getDatabasePassword());
+			stmt = conn.createStatement();
+			sql = "CREATE TABLE member ("
+				+ "id INTEGER PRIMARY KEY AUTO_INCREMENT,"
+				+ "user_name VARCHAR(255) NOT NULL,"
+				+ "password VARCHAR(255),"
+				+ "create_date TIMESTAMP,"
+				+ "pw_change DATETIME)";
+			stmt.execute(sql);
+			stmt.close();
+			stmt = conn.createStatement();
+			sql = "CREATE TABLE profile("
+				+ "id INTEGER PRIMARY KEY AUTO_INCREMENT,"
+				+ "user INTEGER NOT NULL,"
+				+ "country INTEGER,"
+				+ "region INTEGER,"
+				+ "city INTEGER,"
+				+ "dob DATE,"
+				+ "description BLOB,"
+				+ "photo VARCHAR(255))";
+			stmt.execute(sql);
+		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+		finally {
+			try {
+				stmt.close();
+				conn.close();
+			}
+			catch(Exception ex1) {
+				System.err.println(ex1.getMessage());
+			}
+		}
+	}
+
 	@Test
 	public void testId() {
 		Member m = new Member();
@@ -127,9 +174,16 @@ public class MemberTest {
 		}
 	}
 
+	@Test
+	public void testUserAdd() {
+		Member m = new Member();
+		Assert.assertEquals(false, m.signUp("TestUser", "TestPassword"));
+		Assert.assertNotEquals(0, m.getId());
+	}
+
 	@Ignore
 	public void testLogin() {
 		Member m = new Member();
-		Assert.assertEquals(false, m.logIn("user", "password"));
+		Assert.assertEquals(false, m.logIn("TestUser", "TestPassword"));
 	}
 }
