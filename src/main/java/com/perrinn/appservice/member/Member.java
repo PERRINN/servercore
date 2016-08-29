@@ -403,7 +403,7 @@ public class Member {
 				stmt.setLong(3, this.id);
 				stmt.executeUpdate();
 				stmt.close();
-				sql = "UPDATE PROFILE SET country=?,region=?,city=,description=?,photo=?";
+				sql = "UPDATE PROFILE SET country=?,region=?,city=?,description=?,photo=?";
 				stmt = this.conn.prepareStatement(sql);
 				stmt.setLong(1, this.profileCountry);
 				stmt.setLong(2, this.profileRegion);
@@ -425,6 +425,65 @@ public class Member {
 		return fRet;
 	}
 
+
+	public boolean add() {
+		boolean fRet = false;
+
+		PreparedStatement stmt = null;
+		String sql = null;
+		ResultSet rs = null;
+
+		if(this.open() == false) {
+			try {
+				sql = "INSERT INTO MEMBER (user_name,password) VALUES (?,?)";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.user_name);
+				stmt.setString(2, this.password);
+				stmt.executeUpdate();
+				stmt.close();
+
+				// Re-fetch the ID
+				sql = "SELECT id from MEMBER WHERE (user_name=? AND password=?)";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setString(1, this.user_name);
+				stmt.setString(2, this.password);
+				rs = stmt.executeQuery();
+				while(rs.next()) {
+					this.id = rs.getLong("id");
+					this.profileUser = this.id;
+				}
+
+				sql = "INSERT INTO PROFILE (user,country,region,city,description,photo) VALUES(?,?,?,?,?,?)";
+				stmt = this.conn.prepareStatement(sql);
+				stmt.setLong(1, this.profileUser);
+				stmt.setLong(2, this.profileCountry);
+				stmt.setLong(3, this.profileRegion);
+				stmt.setLong(4, this.profileCity);
+				stmt.setString(5, this.profileDescription);
+				stmt.setString(6, this.profilePhoto);
+				stmt.executeUpdate();
+			}
+			catch(Exception ex) {
+				System.err.println(ex.toString());
+				fRet = true;
+			}
+			finally {
+				try {
+					rs.close();
+					stmt.close();
+					this.close();
+				}
+				catch(Exception ex1) {
+					System.out.println(ex1.getMessage());
+				}
+			}
+		}
+		else {
+			System.err.println("Member.add(): No database connection.  Quitting!");
+			fRet = true;
+		}
+		return fRet;
+	}
 	public void close() {
 		if(this.conn != null) {
 			try {
