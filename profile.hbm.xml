@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.perrinn.appservice.beans.Profile" table="profile" >
+		<id name="id" type="java.lang.Integer" column="id" >
+			<generator class="increment" />
+		</id>
+		<property name="create_date" type="Date" >
+			<column name="create_date" not-null="true" />
+		</property>
+		<property name="create_id" type="Integer" >
+			<column name="create_id" length="255" not-null="true" />
+		</property>
+		<property name="change_date" type="Date" >
+			<column name="change_date" not-null="false" />
+		</property>
+		<property name="change_id" type="Integer" >
+			<column name="change_id" not-null="false" />
+		</property>
+		<property name="active" type="Boolean" >
+			<column name="active" not-null="true" />
+		</property>
+		<property name="home_country" type="Integer" >
+			<column name="home_country" not-null="false" />
+		</property>
+		<property name="home_region" type="Integer" >
+			<column name="home_region" not-null="false" />
+		</property>
+		<property name="home_city" type="Integer" >
+			<column name="home_city" not-null="false" />
+		</property>
+		<property name="home_lat" type="Double" >
+			<column name="home_lat" not-null="false" />
+		</property>
+		<property name="home_long" type="Double" >
+			<column name="home_lat" not-null="false" />
+		</property>
+		<property name="home_tz" type="Integer" >
+			<column name="home_tz" not-null="false" />
+		</property>
+		<property name="curr_country" type="Integer" >
+			<column name="curr_country" not-null="false" />
+		</property>
+		<property name="curr_region" type="Integer" >
+			<column name="curr_region" not-null="false" />
+		</property>
+		<property name="curr_city" type="Integer" >
+			<column name="curr_city" not-null="false" />
+		</property>
+		<property name="curr_lat" type="Double" >
+			<column name="curr_lat" not-null="false" />
+		</property>
+		<property name="curr_long" type="Double" >
+			<column name="curr_long" not-null="false" />
+		</property>
+		<property name="curr_tz" type="Integer" >
+			<column name="curr_tz" not-null="false" />
+		</property>
+		<property name="display_name" type="String" >
+			<column name="display_name" not-null="false" />
+		</property>
+		<property name="date_of_birth" type="Date" >
+			<column name="date_of_birth" not-null="false" />
+		</property>
+		<property name="first_name" type="String" >
+			<column name="first_name" not-null="false" />
+		</property>
+		<property name="surname" type="String" >
+			<column name="surname" not-null="false" />
+		</property>
+		<property name="photo" type="Integer" >
+			<column name="photo" not-null="true" />
+		</property>
+	</class>
+
+</hibernate-mapping>
+

@@ -5,7 +5,7 @@
 /* For usage rights, please contact contact@perrinn.com      */
 /*                                                           */
 /*************************************************************/
-package com.perrinn.appservice;
+package com.perrinn.appservice.beans;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

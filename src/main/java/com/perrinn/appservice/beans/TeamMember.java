@@ -1,4 +1,4 @@
-package com.perrinn.appservice.team;
+package com.perrinn.appservice.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

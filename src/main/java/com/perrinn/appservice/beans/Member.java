@@ -8,7 +8,7 @@
 /* This module developed by Christopher Moran                */
 /*************************************************************/
 
-package com.perrinn.appservice.member;
+package com.perrinn.appservice.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

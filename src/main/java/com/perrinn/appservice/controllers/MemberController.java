@@ -8,8 +8,9 @@
 /* This module developed by Christopher Moran                */
 /*************************************************************/
 
-package com.perrinn.appservice.member;
+package com.perrinn.appservice.controllers;
 
+import com.perrinn.appservice.beans.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

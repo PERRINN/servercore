@@ -1,0 +1,706 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.perrinn.appservice.beans.ActivityEntity" table="activity" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="content">
+            <column name="content" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.CityEntity" table="city" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="country">
+            <column name="country" sql-type="int(11)"/>
+        </property>
+        <property name="region">
+            <column name="region" sql-type="int(11)"/>
+        </property>
+        <property name="cityName">
+            <column name="city_name" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.CountryEntity" table="country" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="countryCode">
+            <column name="country_code" sql-type="char(5)" length="5"/>
+        </property>
+        <property name="countryName">
+            <column name="country_name" sql-type="varchar(255)"/>
+        </property>
+        <property name="hasDivision">
+            <column name="has_division" sql-type="smallint(6)"/>
+        </property>
+        <property name="divisionName">
+            <column name="division_name" sql-type="varchar(255)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.CurrencyEntity" table="currency" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="code">
+            <column name="code" sql-type="char(5)" length="5"/>
+        </property>
+        <property name="buyRate">
+            <column name="buy_rate" sql-type="double" precision="-1"/>
+        </property>
+        <property name="sellRate">
+            <column name="sell_rate" sql-type="double" precision="-1"/>
+        </property>
+        <property name="currency">
+            <column name="currency" sql-type="varchar(255)"/>
+        </property>
+        <property name="input">
+            <column name="input" sql-type="double" precision="-1"/>
+        </property>
+        <property name="output">
+            <column name="output" sql-type="double" precision="-1"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.DevicetypeEntity" table="devicetype" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(255)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.EventEntity" table="event" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="evtStart">
+            <column name="evt_start" sql-type="datetime"/>
+        </property>
+        <property name="evtEnd">
+            <column name="evt_end" sql-type="datetime"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(255)"/>
+        </property>
+        <property name="teamId">
+            <column name="team_id" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.ImageEntity" table="image" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="owner">
+            <column name="owner" sql-type="int(11)"/>
+        </property>
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="imageContent">
+            <column name="image_content" sql-type="blob"/>
+        </property>
+        <property name="imageStamp">
+            <column name="image_stamp" sql-type="mediumtext" not-null="true"/>
+        </property>
+        <property name="imageName">
+            <column name="image_name" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="xSize">
+            <column name="x_size" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="ySize">
+            <column name="y_size" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.KeyEntity" table="key" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="devicetype">
+            <column name="devicetype" sql-type="varchar(255)"/>
+        </property>
+        <property name="macAddress">
+            <column name="mac_address" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="deviceName">
+            <column name="device_name" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="deviceType">
+            <column name="device_type" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="profile">
+            <column name="profile" sql-type="int(11)"/>
+        </property>
+        <property name="deviceLat">
+            <column name="device_lat" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="deviceLong">
+            <column name="device_long" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="deviceTz">
+            <column name="device_tz" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.LinkEntity" table="link" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="url">
+            <column name="url" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.LocationEntity" table="location" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="locationName">
+            <column name="location_name" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.MessageEntity" table="message" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="sender">
+            <column name="sender" sql-type="int(11)"/>
+        </property>
+        <property name="receiver">
+            <column name="receiver" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="sendStamp">
+            <column name="send_stamp" sql-type="mediumtext"/>
+        </property>
+        <property name="received">
+            <column name="received" sql-type="smallint(6)"/>
+        </property>
+        <property name="subject">
+            <column name="subject" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="msgBody">
+            <column name="msg_body" sql-type="varchar(255)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.OrganisationEntity" table="organisation" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.ProfileEntity" table="profile" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="homeCountry">
+            <column name="home_country" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="homeRegion">
+            <column name="home_region" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="homeCity">
+            <column name="home_city" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="homeLat">
+            <column name="home_lat" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="homeLong">
+            <column name="home_long" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="homeTz">
+            <column name="home_tz" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="currCountry">
+            <column name="curr_country" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="currRegion">
+            <column name="curr_region" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="currCity">
+            <column name="curr_city" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="currLat">
+            <column name="curr_lat" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="currLong">
+            <column name="curr_long" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="currTz">
+            <column name="curr_tz" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="displayName">
+            <column name="display_name" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="dateOfBirth">
+            <column name="date_of_birth" sql-type="date" not-null="true"/>
+        </property>
+        <property name="firstName">
+            <column name="first_name" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="surname">
+            <column name="surname" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="photo">
+            <column name="photo" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.ProjectEntity" table="project" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="projectName">
+            <column name="project_name" sql-type="varchar(255)"/>
+        </property>
+        <property name="projectOwner">
+            <column name="project_owner" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.RegionEntity" table="region" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="country">
+            <column name="country" sql-type="int(11)"/>
+        </property>
+        <property name="regionName">
+            <column name="region_name" sql-type="varchar(255)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TaskEntity" table="task" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="project">
+            <column name="project" sql-type="int(11)"/>
+        </property>
+        <property name="taskName">
+            <column name="task_name" sql-type="varchar(255)"/>
+        </property>
+        <property name="taskOwner">
+            <column name="task_owner" sql-type="int(11)"/>
+        </property>
+        <property name="assignee">
+            <column name="assignee" sql-type="int(11)"/>
+        </property>
+        <property name="assignDate">
+            <column name="assign_date" sql-type="double" precision="-1"/>
+        </property>
+        <property name="dueDate">
+            <column name="due_date" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="comment">
+            <column name="comment" sql-type="varchar(255)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamEntity" table="team" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="teamName">
+            <column name="team_name" sql-type="varchar(255)"/>
+        </property>
+        <property name="address">
+            <column name="address" sql-type="varchar(255)"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="smallint(6)"/>
+        </property>
+        <property name="organisation">
+            <column name="organisation" sql-type="int(11)"/>
+        </property>
+        <property name="timezone">
+            <column name="timezone" sql-type="int(11)"/>
+        </property>
+        <property name="backgroundImage">
+            <column name="background_image" sql-type="int(11)"/>
+        </property>
+        <property name="wallet">
+            <column name="wallet" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamActivityEntity" table="team_activity" schema="perrinn">
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="activity">
+            <column name="activity" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamEventEntity" table="team_event" schema="perrinn">
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="event">
+            <column name="event" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamImageEntity" table="team_image" schema="perrinn">
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="image">
+            <column name="image" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamLinkEntity" table="team_link" schema="perrinn">
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="link">
+            <column name="LINK" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamMessageEntity" table="team_message" schema="perrinn">
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+        <property name="message">
+            <column name="MESSAGE" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamProfileEntity" table="team_profile" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="leader">
+            <column name="leader" sql-type="smallint(6)" not-null="true"/>
+        </property>
+        <property name="profile">
+            <column name="profile" sql-type="int(11)"/>
+        </property>
+        <property name="locationShared">
+            <column name="location_shared" sql-type="tinyint(1)"/>
+        </property>
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TeamProjectEntity" table="team_project" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="project">
+            <column name="project" sql-type="int(11)"/>
+        </property>
+        <property name="team">
+            <column name="team" sql-type="int(11)"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TimezoneEntity" table="timezone" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="createDate">
+            <column name="create_date" sql-type="date"/>
+        </property>
+        <property name="createId">
+            <column name="create_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="changeDate">
+            <column name="change_date" sql-type="date" not-null="true"/>
+        </property>
+        <property name="changeId">
+            <column name="change_id" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="active">
+            <column name="active" sql-type="tinyint(1)"/>
+        </property>
+        <property name="timezone">
+            <column name="timezone" sql-type="varchar(255)"/>
+        </property>
+        <property name="tzOffset">
+            <column name="tz_offset" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="hasDst">
+            <column name="has_dst" sql-type="tinyint(1)" not-null="true"/>
+        </property>
+        <property name="dstStart">
+            <column name="dst_start" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="dstEnd">
+            <column name="dst_end" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="dstOffset">
+            <column name="dst_offset" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.TransactionEntity" table="transaction" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="senderTeam">
+            <column name="sender_team" sql-type="int(11)"/>
+        </property>
+        <property name="receiverTeam">
+            <column name="receiver_team" sql-type="int(11)"/>
+        </property>
+        <property name="currency">
+            <column name="currency" sql-type="int(11)"/>
+        </property>
+        <property name="input">
+            <column name="input" sql-type="double" precision="-1"/>
+        </property>
+        <property name="output">
+            <column name="output" sql-type="double" precision="-1"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(255)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.perrinn.appservice.beans.WalletEntity" table="wallet" schema="perrinn">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="credit">
+            <column name="credit" sql-type="double" precision="-1"/>
+        </property>
+        <property name="currency">
+            <column name="currency" sql-type="int(11)"/>
+        </property>
+    </class>
+</hibernate-mapping>

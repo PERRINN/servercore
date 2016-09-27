@@ -2,6 +2,7 @@ package com.perrinn.appservice;
 
 import static org.junit.Assert.*;
 
+import com.perrinn.appservice.beans.Keys;
 import org.junit.Test;
 
 public class KeysTest {

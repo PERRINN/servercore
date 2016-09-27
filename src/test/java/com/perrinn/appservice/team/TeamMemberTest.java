@@ -1,6 +1,8 @@
 package com.perrinn.appservice.team;
 
 import java.util.Random;
+
+import com.perrinn.appservice.beans.TeamMember;
 import org.junit.Test;
 import org.junit.Assert;
 

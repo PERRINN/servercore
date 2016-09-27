@@ -1,10 +1,12 @@
 package com.perrinn.appservice.member;
 
 import java.util.Random;
+
+import com.perrinn.appservice.beans.Member;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.Ignore;
+
 import java.util.Date;
 import java.sql.*;
 import com.perrinn.appservice.util.Config;
