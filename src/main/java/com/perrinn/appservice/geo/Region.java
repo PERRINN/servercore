@@ -1,3 +1,13 @@
+/*************************************************************/
+/* Copyright (C) 2016, PERRINN Limited.  All Rights Reserved */
+/*                                                           */
+/* This software is distributed under the Apache 2.0 license */
+/* For usage rights, please contact contact@perrinn.com      */
+/*                                                           */
+/*************************************************************/
+/* This module developed by Christopher Moran                */
+/*************************************************************/
+
 package com.perrinn.appservice.geo;
 
 

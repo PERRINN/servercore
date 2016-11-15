@@ -8,8 +8,8 @@
 /* This module developed by Christopher Moran                */
 /*************************************************************/
 
-package com.perrinn.appservice.geo;
-
+package com.perrinn.appservice.controllers;
+import com.perrinn.appservice.geo.Country;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
