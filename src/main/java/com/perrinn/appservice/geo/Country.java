@@ -96,6 +96,7 @@ public class Country {
 
 	public Country() {
 		this.initLocals();
+		System.out.println("in Country.Country()");
 	}
 
 	public Country(String code) {
@@ -141,7 +142,7 @@ public class Country {
     	return ret;
 	}
 
-	long loadById() {
+	public long loadById() {
 		PreparedStatement stmt = null;
 		String sql = null;
 		ResultSet rs = null;
@@ -186,10 +187,12 @@ public class Country {
 		return this.id;
 	}
 
-	long loadByCode() {
+	public long loadByCode() {
 		PreparedStatement stmt = null;
 		String sql = null;
 		ResultSet rs = null;
+
+		System.out.println("In Country.loadByCode");
 
 		if(this.open() == false) {
 			// Connection is initialised.
@@ -199,6 +202,7 @@ public class Country {
 				stmt.setString(1, this.countryCode);
 				rs = stmt.executeQuery(sql);
 				while(rs.next()) {
+					this.id = rs.getLong("id");
 					this.countryCode = rs.getString("country_code");
 					this.countryName = rs.getString("country_name");
 					this.hasDivision = rs.getBoolean("has_division");

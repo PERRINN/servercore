@@ -23,8 +23,10 @@ public class CountryController {
 	public @ResponseBody String getCountryByCode(@RequestParam("CC") String sCode) {
 		String template = "{ \"%s\": \"%s\", \"%s\": \"%s\" }";
 
+		System.out.println("in CountryController::getCountryByCode");
 		Country c = new Country();
 		c.setCountryCode(sCode);
+		c.loadByCode();
 		return String.format(template, "CountryId", String.valueOf(c.getId()), "CountryName", c.getCountryName());
 	}
 
